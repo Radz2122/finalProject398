@@ -1,0 +1,33 @@
+<html>
+    <head>
+
+        <!-- You can replace JSDeliver with another CDN if you prefer to -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
+      crossorigin="anonymous"></script> -->
+ 
+  
+
+    </head>
+    <body>
+        <div class="detectOnClick"> DETECT ON CLICK </div>
+
+
+    <p>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+
+    <div id="liveView" class="videoView">
+      <button id="webcamButton" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">ENABLE WEBCAM</span>
+      </button>
+     
+      <div style="position: relative;">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left: 0px; top: 0px;"></canvas>
+        <p id='gesture_output' class="output">
+      </div>
+    </div>
+
+        <script script type = "module" src = "recognize.js"></script>
+
+    </body>
+</html>
