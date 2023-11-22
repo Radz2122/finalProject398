@@ -8,9 +8,16 @@ const demosSection = document.getElementById("demos");
 let gestureRecognizer = GestureRecognizer;
 let runningMode = "IMAGE";
 let enableWebcamButton = HTMLButtonElement;
+let passingScore=80;
 let webcamRunning= false;
+let letters=["A","B","C","D","E","F","G","H"];
+let words=["Face","Bed","Bag"];
 const videoHeight = "360px";
 const videoWidth = "480px";
+//the letter we want the user to replicate
+let letterToPredict="";
+//the word we want the user to replicate
+let wordToPredict="";
 
 
 window.onload = function(){
@@ -49,6 +56,7 @@ const video = document.getElementById("webcam");
 const canvasElement = document.getElementById("output_canvas");
 const canvasCtx = canvasElement.getContext("2d");
 const gestureOutput = document.getElementById("gesture_output");
+const gestureToDo= document.getElementById("gesture_toDo");
 
 // Check if webcam access is supported.
 function hasGetUserMedia() {
@@ -74,6 +82,8 @@ function enableCam(event) {
   if (webcamRunning === true) {
     webcamRunning = false;
     enableWebcamButton.innerText = "ENABLE PREDICTIONS";
+    
+   
   } else {
     webcamRunning = true;
     enableWebcamButton.innerText = "DISABLE PREDICTIONS";
@@ -90,11 +100,54 @@ function enableCam(event) {
     video.addEventListener("loadeddata", predictWebcam);
   });
 }
+// displaying the required letter
+  //shuffle array
+  function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+  //output the next letter that the player has to replicate with their hands
+  function outputLetter(){
+    //use array shuffle to output the letter the user has to predict
+    const shuffledArray=shuffle(letters);
+    letterToPredict=shuffledArray[0];
+    gestureToDo.innerText=letterToPredict;
+    console.log(letterToPredict);
+  }
+
+  //output the word  that the player has to replicate with their hands
+  function outputWords(){
+    const shuffledArray=shuffle(words);
+    wordToPredict=shuffledArray[0];
+    for (var i = 0; i < wordToPredict.length; i++) {
+        // console.log(wordToPredict.charAt(i));
+         let splitWord = [];
+      splitWord = wordToPredict.charAt(i);
+    console.log(splitWord);
+    }
+  }
+
 
 let lastVideoTime = -1;
 let results = undefined;
 
-
+  //display letter to gesture
+  outputLetter();
+  //display word to gesture
+  outputWords();
 async function predictWebcam() {
   const webcamElement = document.getElementById("webcam");
   // Now let's start detecting the stream.
@@ -117,6 +170,7 @@ async function predictWebcam() {
   canvasElement.style.width = videoWidth;
   webcamElement.style.width = videoWidth;
 
+
   if (results.landmarks) {
     for (const landmarks of results.landmarks) {
       drawingUtils.drawConnectors(
@@ -134,6 +188,7 @@ async function predictWebcam() {
     }
   }
   canvasCtx.restore();
+ 
   if (results.gestures.length > 0) {
     gestureOutput.style.display = "block";
     gestureOutput.style.width = videoWidth;
@@ -143,6 +198,16 @@ async function predictWebcam() {
     ).toFixed(2);
     const handedness = results.handednesses[0][0].displayName;
     gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
+    // detect if the accuracy lvl is greater than the passing score
+    if(categoryScore>=passingScore && categoryName==letterToPredict){
+      // console.log("pass");
+      console.log("pass");
+        //display next letter to gesture
+      outputLetter();
+    }
+    else{
+      console.log("fail");
+    }
   } else {
     gestureOutput.style.display = "none";
   }
@@ -150,9 +215,12 @@ async function predictWebcam() {
   if (webcamRunning === true) {
     window.requestAnimationFrame(predictWebcam);
   }
-}
+
+
+
+}//predictwebcam fucntion end
 
 
 
 
-}
+}//window onload function that contains all the functions
