@@ -18,7 +18,7 @@ const videoWidth = "480px";
 let letterToPredict="";
 //the word we want the user to replicate
 let wordToPredict="";
-
+let test;
 
 window.onload = function(){
 
@@ -221,6 +221,33 @@ async function predictWebcam() {
 }//predictwebcam fucntion end
 
 
+// Check if gestures are detected.
+if (results.gestures.length > 0) {
+  const categoryScore = results.gestures[0][0].score;
 
+  if (categoryScore < 0.8 || categoryScore > 1.0) {
+    // Display the confidence when score is outside the range.
+    gestureOutput.style.display = "block";
+    gestureOutput.style.width = videoWidth;
+    const categoryName = results.gestures[0][0].categoryName;
+    const formattedScore = parseFloat(categoryScore * 100).toFixed(2);
+    const handedness = results.handednesses[0][0].displayName;
+    gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${formattedScore} %\n Handedness: ${handedness}`;
+  } else {
+    // Hide the display when score is within the range.
+    gestureOutput.style.display = "none";
+  }
+} else {
+  // Hide the display when no gestures are detected.
+  gestureOutput.style.display = "none";
+}
 
-}//window onload function that contains all the functions
+//<<<<<<< HEAD
+// Call this function again to keep predicting when the browser is ready.
+if (webcamRunning === true) {
+  window.requestAnimationFrame(predictWebcam);
+}
+}
+//=======
+//window onload function that contains all the functions
+//>>>>>>> 6f57ed54f1d26f070480fc2f084f2954ff3e81ac
