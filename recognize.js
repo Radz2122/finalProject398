@@ -18,6 +18,7 @@ const videoWidth = "480px";
 let letterToPredict="";
 //the word we want the user to replicate
 let wordToPredict="";
+let test;
 
 window.onload = function(){
 
