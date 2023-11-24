@@ -24,10 +24,8 @@ const videoWidth = "480px";
 //the letter we want the user to replicate
 let letterToPredict = "";
 //the word we want the user to replicate
-let wordToPredict = "";
+let wordToPredict="";
 
-//timer for getting 80% TO D0 lvl1-10sec
-//if they complete it they get points  onepoint per letter
 
 window.onload = function () {
 
@@ -246,4 +244,4 @@ window.onload = function () {
 
 
 
-} //window onload function that contains all the functions
+}//window onload function that contains all the functions
