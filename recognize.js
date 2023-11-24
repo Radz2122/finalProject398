@@ -147,7 +147,7 @@ window.onload = function () {
     splitWord = wordToPredict.split("");
     letterToPredict=splitWord[0];
     console.log(letterToPredict);
-    for (var i = 0; i < wordToPredict.length; i++) {
+    // for (var i = 0; i < wordToPredict.length; i++) {
       //console.log(wordToPredict);//entire word
       
       //split into arrays
@@ -156,10 +156,24 @@ window.onload = function () {
       //   // console.log(splitWord[i]);
       // }
       
-    }
+    // }
+    // display a letter for the user to sign
     gestureToDo.innerText = letterToPredict;
+    //remove the letter that the user has on didsplay from the array
+    splitWord.shift();
+    //splitword is the array of the word that the user currently has to spell
+    console.log(splitWord);
+    
+    
   }
+//new function to recall when we wanna move on to the next letter
+// function recallNextLetter() {
+//   for (let i = 0; i < letterToPredict.length; index++) {
+//     letterToPredict.length++
 
+//   }
+  
+// }
 
   let lastVideoTime = -1;
   let results = undefined;
