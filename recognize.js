@@ -10,7 +10,7 @@ let runningMode = "IMAGE";
 let enableWebcamButton = HTMLButtonElement;
 let passingScore = 80;
 let webcamRunning = false;
-let letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
 //words for lvl 1
 let words = ["Bad", "Bed", "Cab","Had","Bag","Fed"];
 //words for lvl2
@@ -128,25 +128,25 @@ window.onload = function () {
 
     return array;
   }
-  //output the next letter that the player has to replicate with their hands
-  function outputLetter() {
-    //use array shuffle to output the letter the user has to predict
-    const shuffledArray = shuffle(letters);
-    letterToPredict = shuffledArray[0];
-    gestureToDo.innerText = letterToPredict;
-    // console.log(letterToPredict);
-  }
+  
 
   //output the word  that the player has to replicate with their hands
   function outputWords() {
+    //change all the words to uppercase or the comparaison does not work
+    words = words.map(function(x){ return x.toUpperCase(); })
     const shuffledArray = shuffle(words);
     wordToPredict = shuffledArray[0];
+   
     //remove the word form the words array when it is selcted to be signed
     words = words.filter(e => e !== wordToPredict); 
     // console.log(words);
     splitWord = wordToPredict.split("");
+    
+  }
+  //output the next letter that the player has to replicate with their hands
+  function outputLetter() {
     letterToPredict=splitWord[0];
-    console.log(letterToPredict);
+   
     // for (var i = 0; i < wordToPredict.length; i++) {
       //console.log(wordToPredict);//entire word
       
@@ -157,14 +157,17 @@ window.onload = function () {
       // }
       
     // }
+    
+    // letterToPredict.toUpperCase();
+    console.log(letterToPredict);
     // display a letter for the user to sign
     gestureToDo.innerText = letterToPredict;
-    //remove the letter that the user has on didsplay from the array
-    splitWord.shift();
     //splitword is the array of the word that the user currently has to spell
     console.log(splitWord);
-    
-    
+  }
+  function shiftArray(){
+//remove the letter that the user has on didsplay from the array
+splitWord.shift();
   }
 //new function to recall when we wanna move on to the next letter
 // function recallNextLetter() {
@@ -178,10 +181,11 @@ window.onload = function () {
   let lastVideoTime = -1;
   let results = undefined;
 
-  //display letter to gesture
-  outputLetter();
+  
   //display word to gesture
   outputWords();
+  //display letter to gesture
+  outputLetter();
   async function predictWebcam() {
     const webcamElement = document.getElementById("webcam");
     // Now let's start detecting the stream.
@@ -237,9 +241,11 @@ window.onload = function () {
       if (categoryScore >= passingScore && categoryName == letterToPredict) {
         // console.log("pass");
         console.log("pass");
+        shiftArray();
         //display next letter to gesture
-        // outputLetter();
-        outputWords();
+        outputLetter();
+      
+        // outputWords();
       } else {
         console.log("fail");
       }
