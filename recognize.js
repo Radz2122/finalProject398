@@ -12,11 +12,11 @@ let passingScore = 80;
 let webcamRunning = false;
 
 //words for lvl 1
-let words = ["Bad", "Bed", "Cab","Had","Bag","Fed"];
+let words = ["Bad", "Bed", "Cab", "Had", "Bag", "Fed"];
 //words for lvl2
-let wordslvl2=["Head","Ache","Deaf","Face","Bead","Cage","Gage"];
+let wordslvl2 = ["Head", "Ache", "Deaf", "Face", "Bead", "Cage", "Gage"];
 //words for lvl3
-let wordslvl3=["Ahead","Decaf","Facade","Badge","Beach","Hagged","Baggage","Behead","Chafe","Chased"]
+let wordslvl3 = ["Ahead", "Decaf", "Facade", "Badge", "Beach", "Hagged", "Baggage", "Behead", "Chafe", "Chased"]
 //arry containing each letter from the word to sign by user
 let splitWord = [];
 const videoHeight = "360px";
@@ -24,7 +24,7 @@ const videoWidth = "480px";
 //the letter we want the user to replicate
 let letterToPredict = "";
 //the word we want the user to replicate
-let wordToPredict="";
+let wordToPredict = "";
 
 
 window.onload = function () {
@@ -128,60 +128,40 @@ window.onload = function () {
 
     return array;
   }
-  
+
 
   //output the word  that the player has to replicate with their hands
   function outputWords() {
     //change all the words to uppercase or the comparaison does not work
-    words = words.map(function(x){ return x.toUpperCase(); })
+    words = words.map(function (x) {
+      return x.toUpperCase();
+    })
     const shuffledArray = shuffle(words);
     wordToPredict = shuffledArray[0];
-   
+
     //remove the word form the words array when it is selcted to be signed
-    words = words.filter(e => e !== wordToPredict); 
+    words = words.filter(e => e !== wordToPredict);
     // console.log(words);
     splitWord = wordToPredict.split("");
-    
+
   }
   //output the next letter that the player has to replicate with their hands
   function outputLetter() {
-    letterToPredict=splitWord[0];
-   
-    // for (var i = 0; i < wordToPredict.length; i++) {
-      //console.log(wordToPredict);//entire word
-      
-      //split into arrays
-      // for (let u = 0; u < splitWord.length; u++) {
-      //   gestureToDo.innerText = splitWord;
-      //   // console.log(splitWord[i]);
-      // }
-      
-    // }
-    
-    // letterToPredict.toUpperCase();
+    if (splitWord && splitWord.length > 0) {
+    letterToPredict = splitWord[0];
     console.log(letterToPredict);
     // display a letter for the user to sign
     gestureToDo.innerText = letterToPredict;
     //splitword is the array of the word that the user currently has to spell
     console.log(splitWord);
-  }
-  function shiftArray(){
-//remove the letter that the user has on didsplay from the array
-splitWord.shift();
-  }
-//new function to recall when we wanna move on to the next letter
-// function recallNextLetter() {
-//   for (let i = 0; i < letterToPredict.length; index++) {
-//     letterToPredict.length++
+    }
 
-//   }
-  
-// }
+  }
 
   let lastVideoTime = -1;
   let results = undefined;
 
-  
+
   //display word to gesture
   outputWords();
   //display letter to gesture
@@ -239,14 +219,22 @@ splitWord.shift();
       gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
       // detect if the accuracy lvl is greater than the passing score
       if (categoryScore >= passingScore && categoryName == letterToPredict) {
-        // console.log("pass");
+        if (splitWord.length > 0) {
         console.log("pass");
-        shiftArray();
-        //display next letter to gesture
+          //remove the letter that the user has on didsplay from the array
+        splitWord.shift();
+        //display next letter to gesture-
         outputLetter();
-      
-        // outputWords();
-      } else {
+      }
+      else {
+        console.log("splitWord is empty, switching to next word");
+        outputWords(); // If splitWord is empty, load the next word
+        outputLetter(); // Display the first letter of the new word
+    }
+        
+      }
+  
+      else {
         console.log("fail");
       }
     } else {
@@ -264,4 +252,4 @@ splitWord.shift();
 
 
 
-}//window onload function that contains all the functions
+} //window onload function that contains all the functions
