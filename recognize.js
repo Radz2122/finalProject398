@@ -25,6 +25,7 @@ const videoWidth = "480px";
 let letterToPredict = "";
 //the word we want the user to replicate
 let wordToPredict = "";
+let currentWordArray = words; // Initialize with the first set of words
 
 
 window.onload = function () {
@@ -133,20 +134,36 @@ window.onload = function () {
   //output the word  that the player has to replicate with their hands
   function outputWords() {
     //change all the words to uppercase or the comparaison does not work
-    words = words.map(function (x) {
+    currentWordArray = currentWordArray.map(function (x) {
       return x.toUpperCase();
     })
-    const shuffledArray = shuffle(words);
+    // const shuffledArray = shuffle(words);
+    // wordToPredict = shuffledArray[0];
+
+    // //remove the word form the words array when it is selcted to be signed
+    // words = words.filter(e => e !== wordToPredict);
+    // // console.log(words);
+    // splitWord = wordToPredict.split("");
+    if (currentWordArray.length === 0) {
+      levelCompleted();
+      if (currentWordArray === wordslvl2) {
+        currentWordArray = wordslvl3; // If wordslvl2 is done, move to wordslvl3
+      } else {
+        currentWordArray = wordslvl2; // Else, move to wordslvl2
+      }
+    }
+  
+    const shuffledArray = shuffle(currentWordArray);
     wordToPredict = shuffledArray[0];
-
-    //remove the word form the words array when it is selcted to be signed
-    words = words.filter(e => e !== wordToPredict);
-    // console.log(words);
+    currentWordArray = currentWordArray.filter((e) => e !== wordToPredict);
     splitWord = wordToPredict.split("");
-
   }
   //output the next letter that the player has to replicate with their hands
   function outputLetter() {
+     //change all the words to uppercase or the comparaison does not work
+     splitWord = splitWord.map(function (x) {
+      return x.toUpperCase();
+    })
     if (splitWord && splitWord.length > 0) {
     letterToPredict = splitWord[0];
     console.log(letterToPredict);
@@ -167,6 +184,7 @@ window.onload = function () {
   //display letter to gesture
   outputLetter();
   async function predictWebcam() {
+
     const webcamElement = document.getElementById("webcam");
     // Now let's start detecting the stream.
     if (runningMode === "IMAGE") {
@@ -227,9 +245,11 @@ window.onload = function () {
         outputLetter();
       }
       else {
-        console.log("splitWord is empty, switching to next word");
-        outputWords(); // If splitWord is empty, load the next word
-        outputLetter(); // Display the first letter of the new word
+        if (splitWord.length === 0) {
+          console.log("splitWord is empty, switching to next word");
+          outputWords(); // This will move to the next set of words
+          outputLetter(); // Display the first letter of the new word
+        }
     }
         
       }
@@ -248,6 +268,41 @@ window.onload = function () {
 
 
   } //predictwebcam fucntion end
+  //tanstion screen 
+
+  // Transition screen functions
+  function showTransitionScreen() {
+    // Hide the game canvas
+    document.getElementById("gameCanvas").style.display = "none";
+
+    // Display the transition screen
+    const transitionScreen = document.getElementById("transitionScreen");
+    transitionScreen.style.display = "block";
+
+    // Add logic for what happens when the "Continue" button is clicked
+    const continueButton = document.getElementById("continueButton");
+    continueButton.addEventListener("click", function() {
+      // Hide the transition screen
+      transitionScreen.style.display = "none";
+
+      // Show the game canvas again or load the next level
+      document.getElementById("gameCanvas").style.display = "block";
+
+      // You can trigger the logic to start the next level here
+      // For example: startNextLevel();
+    });
+  }
+
+  // Example usage: Call this function when the level is completed
+  // Replace this with your logic for when the level is successfully completed
+  // For example, when all words in a level are signed correctly
+  function levelCompleted() {
+    // Show the transition screen
+    showTransitionScreen();
+  }
+//transtiion screen
+
+
 
 
 

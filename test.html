@@ -1,34 +1,57 @@
+<!DOCTYPE html>
 <html>
-    <head>
+<head>
+  <!-- Your existing scripts and styles -->
+  <!-- For example, your Mediapipe and other script references -->
 
-        <!-- You can replace JSDeliver with another CDN if you prefer to -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
-      crossorigin="anonymous"></script> -->
- 
-  
+  <!-- Your existing head content -->
+  <!-- ... -->
 
-    </head>
-    <body>
-        <div class="detectOnClick"> DETECT ON CLICK </div>
-
-
-    <p>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
-
-    <div id="liveView" class="videoView">
-      <button id="webcamButton" class="mdc-button mdc-button--raised">
-        <span class="mdc-button__ripple"></span>
-        <span class="mdc-button__label">ENABLE WEBCAM</span>
-      </button>
-     
-      <div style="position: relative;">
-        <video id="webcam" autoplay playsinline></video>
-        <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left: 0px; top: 0px;"></canvas>
-        <p id='gesture_toDo' class="output"></p>
-        <p id='gesture_output' class="output">     
-      </div>
+  <!-- Styles for the transition screen (you can modify this as needed) -->
+  <style>
+    #transitionScreen {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      border: 2px solid #333333;
+      padding: 20px;
+      text-align: center;
+    }
+    #transitionScreen h2 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameCanvas">
+  <!-- Your existing body content -->
+  <div class="detectOnClick"> DETECT ON CLICK </div>
+  <p>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+  <div id="liveView" class="videoView">
+    <button id="webcamButton" class="mdc-button mdc-button--raised">
+      <span class="mdc-button__ripple"></span>
+      <span class="mdc-button__label">ENABLE WEBCAM</span>
+    </button>
+    <div style="position: relative;">
+      <video id="webcam" autoplay playsinline></video>
+      <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left: 0px; top: 0px;"></canvas>
+      <p id='gesture_toDo' class="output"></p>
+      <p id='gesture_output' class="output"></p>
     </div>
+  </div>
+</div>
+  <!-- Transition screen HTML -->
+  <div id="transitionScreen">
+    <h2>Level Complete</h2>
+    <p>Congratulations!</p>
+    <button id="continueButton">Continue</button>
+  </div>
 
-        <script script type = "module" src = "recognize.js"></script>
-
-    </body>
+  <!-- Your existing script references -->
+  <!-- For example, your recognize.js script -->
+  <script script type="module" src="recognize.js"></script>
+</body>
 </html>
