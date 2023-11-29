@@ -152,7 +152,7 @@ window.onload = function () {
         currentWordArray = wordslvl2; // Else, move to wordslvl2
       }
     }
-  
+
     const shuffledArray = shuffle(currentWordArray);
     wordToPredict = shuffledArray[0];
     currentWordArray = currentWordArray.filter((e) => e !== wordToPredict);
@@ -160,17 +160,17 @@ window.onload = function () {
   }
   //output the next letter that the player has to replicate with their hands
   function outputLetter() {
-     //change all the words to uppercase or the comparaison does not work
-     splitWord = splitWord.map(function (x) {
+    //change all the words to uppercase or the comparaison does not work
+    splitWord = splitWord.map(function (x) {
       return x.toUpperCase();
     })
     if (splitWord && splitWord.length > 0) {
-    letterToPredict = splitWord[0];
-    console.log(letterToPredict);
-    // display a letter for the user to sign
-    gestureToDo.innerText = letterToPredict;
-    //splitword is the array of the word that the user currently has to spell
-    console.log(splitWord);
+      letterToPredict = splitWord[0];
+      console.log(letterToPredict);
+      // display a letter for the user to sign
+      gestureToDo.innerText = letterToPredict;
+      //splitword is the array of the word that the user currently has to spell
+      console.log(splitWord);
     }
 
   }
@@ -230,31 +230,33 @@ window.onload = function () {
       gestureOutput.style.display = "block";
       gestureOutput.style.width = videoWidth;
       const categoryName = results.gestures[0][0].categoryName;
-      const categoryScore = parseFloat(
+      const categoryScore = parseInt(
         results.gestures[0][0].score * 100
-      ).toFixed(2);
+      );
       const handedness = results.handednesses[0][0].displayName;
-      gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
+      // Add a delay before updating the displayed score
+      const delayMilliseconds = 2000; // Adjust the delay time as needed (in milliseconds)
+      setTimeout(() => {
+        gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
+      }, delayMilliseconds);
+      // gestureOutput.innerText = `GestureRecognizer: ${categoryName}\n Confidence: ${categoryScore} %\n Handedness: ${handedness}`;
       // detect if the accuracy lvl is greater than the passing score
       if (categoryScore >= passingScore && categoryName == letterToPredict) {
         if (splitWord.length > 0) {
-        console.log("pass");
+          console.log("pass");
           //remove the letter that the user has on didsplay from the array
-        splitWord.shift();
-        //display next letter to gesture-
-        outputLetter();
-      }
-      else {
-        if (splitWord.length === 0) {
-          console.log("splitWord is empty, switching to next word");
-          outputWords(); // This will move to the next set of words
-          outputLetter(); // Display the first letter of the new word
+          splitWord.shift();
+          //display next letter to gesture-
+          outputLetter();
+        } else {
+          if (splitWord.length === 0) {
+            console.log("splitWord is empty, switching to next word");
+            outputWords(); // This will move to the next set of words
+            outputLetter(); // Display the first letter of the new word
+          }
         }
-    }
-        
-      }
-  
-      else {
+
+      } else {
         console.log("fail");
       }
     } else {
@@ -281,7 +283,7 @@ window.onload = function () {
 
     // Add logic for what happens when the "Continue" button is clicked
     const continueButton = document.getElementById("continueButton");
-    continueButton.addEventListener("click", function() {
+    continueButton.addEventListener("click", function () {
       // Hide the transition screen
       transitionScreen.style.display = "none";
 
@@ -300,7 +302,7 @@ window.onload = function () {
     // Show the transition screen
     showTransitionScreen();
   }
-//transtiion screen
+  //transtiion screen
 
 
 
