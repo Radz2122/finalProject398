@@ -30,30 +30,11 @@ let currentWordArray = words; // Initialize with the first set of words
 
 
 window.onload = function () {
-function showPopup(word) {
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-    popup.innerHTML = `
-      <div class="popup-content">
-        <p>Congratulations! You completed the word: ${word}</p>
-        <button id="continueButton">Continue</button>
-      </div>
-    `;
 
-    document.body.appendChild(popup);
-
-    const continueButton = popup.querySelector('#continueButton');
-    continueButton.addEventListener('click', () => {
-      document.body.removeChild(popup);
-      // Trigger logic for next letter/word or any game flow here
-    });
-  }
 
   // Function to check if the word is completed
   function checkWordCompletion() {
     if (splitWord.length === 0) {
-      const completedWord = wordToPredict;
-      showPopup(completedWord);
       outputWords(); // Move to the next word
       outputLetter(); // Display the first letter of the new word
     }
