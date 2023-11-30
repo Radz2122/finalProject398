@@ -46,6 +46,10 @@ window.onload = function () {
       splitWord.shift(); // Remove the letter that the user completed
       outputLetter(); // Display the next letter
       checkWordCompletion(); // Check if the word is completed
+      if (splitWord.length > 0) {
+        const nextLetter = splitWord[0];
+        displayLetterImage(nextLetter.toUpperCase()); // Display the image for the next letter
+      }//JUSTADDED
     }
   }
   const createGestureRecognizer = async () => {
@@ -180,8 +184,16 @@ window.onload = function () {
   }
 
 
-  
-  
+  //JUSTADDED
+  // Function to display the image corresponding to a letter
+function displayLetterImage(letter) {
+  const imageFolder = './letterImages/'; // Update this path to match your image folder
+  const imageElement = document.getElementById('letterImage');
+  const imagePath = imageFolder + letter.toUpperCase() + '.png'; // Assuming images are named A.png, B.png, etc.
+
+  // Display the image corresponding to the letter
+  imageElement.src = imagePath;
+}
 
 
   //output the next letter that the player has to replicate with their hands
@@ -191,10 +203,12 @@ window.onload = function () {
       return x.toUpperCase();
     })
     if (splitWord && splitWord.length > 0) {
-      letterToPredict = splitWord[0];
+      letterToPredict = splitWord[0].toUpperCase();;
       console.log(letterToPredict);
       // display a letter for the user to sign
       gestureToDo.innerText = "Letter to sign: "+letterToPredict;
+      displayLetterImage(letterToPredict); // Display the image for the current letter
+    //JUSTADDED
       //splitword is the array of the word that the user currently has to spell
       console.log(splitWord);
     }

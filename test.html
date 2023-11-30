@@ -36,19 +36,20 @@
 
   <div id="gameCanvas" class="output_canvas">
   <!-- Your existing body content -->
-  <div class="starttxt">
-    <div class="detectOnClick"> Click the button to start </div>
-    <p>Sign the word shown below</p>
-  </div>
+  
  
   <div id="liveView" class="videoView">
+    <div class="starttxt">
+      <div class="detectOnClick"> Click the button to start </div>
+      <p>Sign the word shown below</p>
+    </div>
     <button id="webcamButton" class="mdc-button mdc-button--raised">
       <span class="mdc-button__ripple"></span>
       <span class="mdc-button__label">Start</span>
     </button>
     <div style="position: relative;">
-      
       <video id="webcam" autoplay playsinline></video>
+      <img id="letterImage" src="" alt="Letter Image" class="letter-image">
    
       <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left:0; top: 0px; transform: scaleX(-1);"></canvas>
       <p id='word_toDo' class="output"></p>
