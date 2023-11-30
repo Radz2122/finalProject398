@@ -1,0 +1,130 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+   position: relative;
+  }
+  
+  /* Header styles */
+  h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+  }
+  
+ /* Button styles */
+.mdc-button {
+    background-color: #2980b9;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+    pointer-events: auto; /* Allow button click events */
+  }
+  
+  .mdc-button:hover {
+    background-color: #3498db;
+  }
+  
+ /* Video container styles */
+#liveView {
+    margin-top: 20px;
+    text-align: center;
+    position: relative;
+    pointer-events: auto; /* Allow click events on the video container */
+ 
+  }
+  
+  /* Video styles */
+  #webcam {
+    max-width: 100%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scaleX(-1);
+  }
+  
+  /* Canvas styles */
+  .output_canvas {
+    position: absolute;
+    left: 35%;
+    top: 35%;
+    margin:0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* Output text styles */
+  .output {
+    color: #ffffff;
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  
+  /* Transition screen styles */
+  #transitionScreen {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1a1a1a;
+    border: 2px solid #ffffff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  #transitionScreen h2 {
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+  
+  #transitionScreen p {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  #transitionScreen button {
+    background-color: #2980b9;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #transitionScreen button:hover {
+    background-color: #3498db;
+  }
+  .starttxt{
+    text-align: center;
+    margin-top: 20px;
+  }
+ /* Styles for the overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 9998; /* Place below the pop-up but above other content */
+}
+
+/* Styles for the pop-up container */
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 2px solid #333;
+  padding: 20px;
+  z-index: 9999; /* Set a high z-index to be on top */
+}

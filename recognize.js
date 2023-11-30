@@ -28,8 +28,45 @@ let wordToPredict = "";
 let currentWordArray = words; // Initialize with the first set of words
 
 
-window.onload = function () {
 
+window.onload = function () {
+function showPopup(word) {
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    popup.innerHTML = `
+      <div class="popup-content">
+        <p>Congratulations! You completed the word: ${word}</p>
+        <button id="continueButton">Continue</button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    const continueButton = popup.querySelector('#continueButton');
+    continueButton.addEventListener('click', () => {
+      document.body.removeChild(popup);
+      // Trigger logic for next letter/word or any game flow here
+    });
+  }
+
+  // Function to check if the word is completed
+  function checkWordCompletion() {
+    if (splitWord.length === 0) {
+      const completedWord = wordToPredict;
+      showPopup(completedWord);
+      outputWords(); // Move to the next word
+      outputLetter(); // Display the first letter of the new word
+    }
+  }
+
+  // Function to handle successful completion of a letter
+  function handleSuccessfulLetterCompletion() {
+    if (splitWord.length > 0) {
+      splitWord.shift(); // Remove the letter that the user completed
+      outputLetter(); // Display the next letter
+      checkWordCompletion(); // Check if the word is completed
+    }
+  }
   const createGestureRecognizer = async () => {
     const vision = await FilesetResolver.forVisionTasks(
       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
@@ -65,6 +102,7 @@ window.onload = function () {
   const canvasCtx = canvasElement.getContext("2d");
   const gestureOutput = document.getElementById("gesture_output");
   const gestureToDo = document.getElementById("gesture_toDo");
+  const wordToDo= document.getElementById("word_toDo");
 
   // Check if webcam access is supported.
   function hasGetUserMedia() {
@@ -89,12 +127,12 @@ window.onload = function () {
 
     if (webcamRunning === true) {
       webcamRunning = false;
-      enableWebcamButton.innerText = "ENABLE PREDICTIONS";
+      enableWebcamButton.innerText = "START";
 
 
     } else {
       webcamRunning = true;
-      enableWebcamButton.innerText = "DISABLE PREDICTIONS";
+      enableWebcamButton.innerText = "STOP";
     }
 
     // getUsermedia parameters.
@@ -152,12 +190,19 @@ window.onload = function () {
         currentWordArray = wordslvl2; // Else, move to wordslvl2
       }
     }
-
+    
     const shuffledArray = shuffle(currentWordArray);
     wordToPredict = shuffledArray[0];
     currentWordArray = currentWordArray.filter((e) => e !== wordToPredict);
+    wordToDo.innerText=wordToPredict;
     splitWord = wordToPredict.split("");
   }
+
+
+  
+  
+
+
   //output the next letter that the player has to replicate with their hands
   function outputLetter() {
     //change all the words to uppercase or the comparaison does not work
@@ -168,10 +213,11 @@ window.onload = function () {
       letterToPredict = splitWord[0];
       console.log(letterToPredict);
       // display a letter for the user to sign
-      gestureToDo.innerText = letterToPredict;
+      gestureToDo.innerText = "Letter to sign: "+letterToPredict;
       //splitword is the array of the word that the user currently has to spell
       console.log(splitWord);
     }
+    
 
   }
 

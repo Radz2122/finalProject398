@@ -24,20 +24,34 @@
       margin-bottom: 10px;
     }
   </style>
+  <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-  <div id="gameCanvas">
+  <div id="popupContainer" class="popup-container">
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="popupContent" class="popup-content">
+      <!-- Pop-up content goes here -->
+    </div>
+  </div>
+  <div id="gameCanvas" class="output_canvas">
   <!-- Your existing body content -->
-  <div class="detectOnClick"> DETECT ON CLICK </div>
-  <p>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+  <div class="starttxt">
+    <div class="detectOnClick"> Click the button to start </div>
+    <p>Sign the word shown below</p>
+  </div>
+ 
   <div id="liveView" class="videoView">
     <button id="webcamButton" class="mdc-button mdc-button--raised">
       <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">ENABLE WEBCAM</span>
+      <span class="mdc-button__label">Start</span>
     </button>
     <div style="position: relative;">
+      
       <video id="webcam" autoplay playsinline></video>
-      <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left: 0px; top: 0px;"></canvas>
+   
+      <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left:0; top: 0px; transform: scaleX(-1);"></canvas>
+      <p id='word_toDo' class="output"></p>
       <p id='gesture_toDo' class="output"></p>
       <p id='gesture_output' class="output"></p>
     </div>
